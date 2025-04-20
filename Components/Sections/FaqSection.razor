@@ -1,0 +1,107 @@
+﻿@rendermode InteractiveServer
+
+<section id="faq" class="relative pt-2 pb-12 bg-gray-200 text-gray-900">
+    <div class="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-4">Často kladené dotazy</h2>
+            <div class="mx-auto w-20 h-1 bg-yellow-500 rounded"></div>
+            <p class="text-lg sm:text-xl text-gray-600 mt-3">Vše, co by vás mohlo zajímat před spoluprací</p>
+        </div>
+
+        <div class="space-y-6">
+            @for (int i = 0; i < FaqItems.Count; i++)
+            {
+                var localIndex = i;
+                var item = FaqItems[i];
+
+                <div class="border border-gray-200 rounded-xl shadow-sm bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="w-full text-left px-6 py-5 text-lg font-semibold flex justify-between items-center hover:text-yellow-600"
+                            @onclick="@(() => Toggle(localIndex))">
+                        <span>@item.Question</span>
+                        <svg class="w-5 h-5 transform transition-transform duration-300"
+                             style="@((ActiveIndex == localIndex) ? "rotate(180deg)" : "")"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    @if (ActiveIndex == localIndex)
+                    {
+                        <div class="px-6 pb-6 text-gray-700 text-base">
+                            @item.Answer
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private int? ActiveIndex = null;
+
+    private void Toggle(int index)
+    {
+        ActiveIndex = (ActiveIndex == index) ? null : index;
+    }
+
+    private List<FaqItem> FaqItems = new()
+    {
+        new()
+        {
+            Question = "Jak dlouho trvá montáž sádrokartonu?",
+            Answer = "Doba realizace závisí především na velikosti prostoru a konstrukčních požadavcích. Menší bytové úpravy většinou zaberou kolem 2–3 dnů. U složitějších projektů musíte počítat s větší časovou náročností. Přibližný harmonogram montáže budete znát dopředu."
+        },
+        new()
+        {
+            Question = "Kolik stojí montáž sádrokartonu?",
+            Answer = "Cenu ovlivňuje několik faktorů – rozsah práce, typ konstrukce, náročnost práce nebo požadované materiály. Teprve až budu znát všechny detaily, mohu zákazníkovi bezplatně poskytnout fundovanou cenovou nabídku."
+        },
+        new()
+        {
+            Question = "Pracujete také o víkendech nebo svátcích?",
+            Answer = "Ano, po předchozí domluvě mohu vyhovět zákazníkovi také mimo standarní pracovní dny – především pokud jde o komerční prostory nebo časově citlivé projekty. Za normálních okolností si ovšem nechávám víkendy a svátky zpravidla volné."
+        },
+        new()
+        {
+            Question = "Jak probíhá nezávazná konzultace?",
+            Answer = "Nejprve si domluvíme termín osobní návštěvy. Na místě zhodnotím prostor, vyslechnu si vaše přání a potřeby, doporučím vhodné řešení a připravím konkrétní cenovou nabídku včetně časového odhadu."
+        },
+        new()
+        {
+            Question = "Jaké značky sádrokartonů používáte?",
+            Answer = "Nejčastěji pracuji s osvědčenými značkami Rigips, Knauf a Lafarge. Na Lafarge a Knauf mám také certifikace a školení. Materiály vždy volím podle vhodnosti pro daný typ konstrukce. Samozřejmě přihlížím také k rozpočtu zákazníka."
+        },
+        new()
+        {
+            Question = "Realizujete i protipožární nebo akustické systémy?",
+            Answer = "Ano, specializuji se na protipožární konstrukce a akustické úpravy – například v komerčních prostorách, kancelářích nebo bytech s vyššími nároky na klid. Všechny systémy odpovídají aktuálním normám."
+        },
+        new()
+        {
+            Question = "Kde působíte?",
+            Answer = "Montáže sadrokartonů provádím na celém území Plzeňského kraje – nejčastěji v Klatovech, Plzni, Sušici, Přešticích, Domažlicích, Rokycanech a přilehlých oblastech. Po domluvě mohu vycestovat také mimo region."
+        },
+        new()
+        {
+            Question = "Zajišťujete úklid po dokončení zakázky?",
+            Answer = "Ano, po dokončení zakázky vždycky základně uklidím, případně zabezpečím odvoz nahromaděného odpadu. Cílem je, aby byl prostor okamžitě připraven k dalšímu použití."
+        },
+        new()
+        {
+            Question = "Jak mám připravit prostor před montáží?",
+            Answer = "Ideálně prostor vyklidit a zpřístupnit místa, kde se budu pohybovat. Pokud to není možné, mohu nábytek či vybavení částečně zakrýt a ochránit před poškožením."
+        },
+        new()
+        {
+            Question = "Jaký typ sádrokartonu je vhodný do koupelny?",
+            Answer = "Do vlhkých prostor se používají tzv. impregnované sádrokartony (označení H2). Jsou odolnější vůči vlhkosti a vhodné i pro parní prostředí koupelen. Při realizaci vždy vyberu správný materiál podle konkrétní situace."
+        }
+    };
+
+    private class FaqItem
+    {
+        public string Question { get; set; } = string.Empty;
+        public string Answer { get; set; } = string.Empty;
+    }
+}

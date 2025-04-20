@@ -1,0 +1,96 @@
+﻿<section id="sluzby" class="relative pt-12 pb-10 bg-gray-200 text-gray-900">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="mb-10 text-center">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-3">Poskytované služby</h2>
+            <div class="mx-auto w-20 h-1 bg-yellow-500 rounded"></div>
+            <p class="text-lg sm:text-xl text-gray-600 mt-3">Kvalitní sádrokartonářské práce od příček až po půdní vestavby</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var service in services)
+            {
+                <div class="relative bg-white rounded-xl shadow-md p-6 transition hover:shadow-xl ring-1 ring-gray-200 overflow-hidden">
+                    <!-- Srpek měsíce -->
+                    <div class="absolute -top-6 -right-6 w-20 h-20 bg-yellow-400 rounded-full z-0"></div>
+
+                    <!-- Obsah -->
+                    <div class="relative z-10 mb-4 text-yellow-500">
+                        <div class="inline-block bg-yellow-100 rounded-full p-3 shadow-inner">
+                            @service.Icon
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 relative z-10">@service.Title</h3>
+                    <p class="text-gray-800 relative z-10">@service.Description</p>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private class ServiceItem
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public RenderFragment Icon { get; set; } = default!;
+    }
+
+    private List<ServiceItem> services = new()
+    {
+        new()
+        {
+            Title = "Montáž sádrokartonových příček",
+            Description = "Vytváření vnitřních stěn pro rozdělení prostor. Rychlé a elegantní řešení pro rekonstrukce i novostavby.",
+            Icon = @<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM9 9h2v6H9V9zm4 0h2v6h-2V9z" />
+</svg>
+        },
+        new()
+        {
+            Title = "Instalace podhledů",
+            Description = "Snížení stropů pro zakrytí rozvodů, zlepšení akustiky a estetický dojem interiéru.",
+            Icon = @<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 7l9 4 9-4-9-4-9 4zm0 6l9 4 9-4m-9 4v5" />
+</svg>
+        },
+        new()
+        {
+            Title = "Půdní vestavby",
+            Description = "Přeměna podkrovních prostor na obytné místnosti s důrazem na izolaci a komfort.",
+            Icon = @<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 9.75L12 3l9 6.75M4.5 10.5V20a.75.75 0 00.75.75h14.5a.75.75 0 00.75-.75V10.5" />
+</svg>
+        },
+        new()
+        {
+            Title = "Tepelná a akustická izolace",
+            Description = "Zvýšení komfortu a úspory energií pomocí zateplení a odhlučnění interiéru.",
+            Icon = @<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07m2.83-9.9a9 9 0 010 12.73" />
+</svg>
+        },
+        new()
+        {
+            Title = "Montáž předsazených stěn",
+            Description = "Zakrytí technických rozvodů a úprava nerovných stěn s čistým výsledkem.",
+            Icon = @<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 6h18M3 12h18M3 18h18" />
+</svg>
+        },
+        new()
+        {
+            Title = "Protipožární konstrukce",
+            Description = "Instalace sádrokartonových systémů s požární odolností dle platných norem.",
+            Icon = @<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 3l8 4v5c0 5.25-3.5 9.75-8 11-4.5-1.25-8-5.75-8-11V7l8-4zm-2 7l2 2 4-4" />
+</svg>
+        }
+    };
+}

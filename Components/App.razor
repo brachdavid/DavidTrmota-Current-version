@@ -8,7 +8,62 @@
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="DavidTrmota.styles.css" />
     <link rel="stylesheet" href="tailwind.css" />
+
     <HeadOutlet />
+    <!-- Schema.org Person -->
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@type": "Person",
+          "name": "David Trmota",
+          "jobTitle": "Sádrokartonář",
+          "description": "David Trmota je zkušený řemeslník specializující se na montáže sádrokartonových příček, podhledů a půdních vestaveb v Plzeňském kraji.",
+          "address": {
+            "@@type": "PostalAddress",
+            "addressRegion": "Plzeňský kraj",
+            "addressCountry": "CZ"
+          },
+          "areaServed": [
+            "Klatovy",
+            "Plzeň",
+            "Sušice",
+            "Přeštice",
+            "Domažlice",
+            "Rokycany"
+          ],
+          "worksFor": {
+            "@@type": "Organization",
+            "name": "Sádrokartony Trmota"
+          },
+          "url": "https://tvujweb.cz"
+        }
+    </script>
+
+    <!-- Schema.org FAQPage -->
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@@type": "Question",
+              "name": "Jak dlouho trvá montáž sádrokartonu?",
+              "acceptedAnswer": {
+                "@@type": "Answer",
+                "text": "Doba realizace závisí především na velikosti prostoru a konstrukčních požadavcích. Menší bytové úpravy většinou zaberou kolem 2–3 dnů. Přibližný harmonogram montáže budete znát dopředu."
+              }
+            },
+            {
+              "@@type": "Question",
+              "name": "Kolik stojí montáž sádrokartonu?",
+              "acceptedAnswer": {
+                "@@type": "Answer",
+                "text": "Cenu ovlivňuje několik faktorů – rozsah práce, typ konstrukce, náročnost práce nebo požadované materiály. Teprve až budu znát všechny detaily, mohu zákazníkovi bezplatně poskytnout fundovanou cenovou nabídku."
+              }
+            }
+          ]
+        }
+    </script>
 </head>
 
 <body>
