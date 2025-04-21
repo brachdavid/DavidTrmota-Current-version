@@ -1,0 +1,216 @@
+﻿@rendermode InteractiveServer
+
+<section id="galerie" class="relative py-12 bg-gray-50 text-gray-900">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-4">Galerie realizací</h2>
+            <div class="mx-auto w-20 h-1 bg-yellow-500 rounded"></div>
+            <p class="text-lg sm:text-xl text-gray-600 mt-3">Ukázky dokončených projektů v Plzeňském kraji</p>
+        </div>
+
+        <!-- Galerie -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var image in VisibleImages)
+            {
+                <figure class="relative overflow-hidden rounded-xl shadow-md group cursor-pointer"
+                        @onclick="() => OpenModal(image)">
+                    <img src="@image.Url"
+                         alt="@image.Alt"
+                         class="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-300" />
+
+                    <figcaption class="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-sm px-4 py-2 backdrop-blur-sm rounded-b-xl">
+                        @image.Caption
+                    </figcaption>
+                </figure>
+            }
+        </div>
+
+        <!-- Načíst další -->
+        @if (VisibleImages.Count < AllImages.Count)
+        {
+            <div class="text-center mt-10">
+                <button class="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-md hover:bg-yellow-600 transition"
+                        @onclick="LoadMore">
+                    Načíst další fotografie
+                </button>
+            </div>
+        }
+
+        <!-- Modal -->
+        @if (SelectedImage is not null)
+        {
+            <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50"
+                 @onclick="CloseModal">
+                <div class="relative mx-4 max-w-3xl w-full" @onclick:stopPropagation>
+                    <!-- Zavírací tlačítko -->
+                    <button class="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 text-black text-2xl font-bold rounded-full shadow-lg transition"
+                            @onclick="CloseModal" aria-label="Zavřít">
+                        <span>&times;</span>
+                    </button>
+
+                    <img src="@SelectedImage.Url"
+                         alt="@SelectedImage.Alt"
+                         class="w-full max-h-[80vh] object-contain rounded-xl shadow-xl" />
+
+                    <p class="mt-4 text-center text-white text-lg">@SelectedImage.Caption</p>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</section>
+
+@code {
+    private const int LoadStep = 6;
+    private int LoadedCount = LoadStep;
+
+    private GalleryImage? SelectedImage = null;
+
+    private List<GalleryImage> AllImages = new()
+    {
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_1.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_2.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_3.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_4.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_5.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_6.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_7.webp",
+        Alt = "Montáž sádrokartonu - Kozí (Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_8.webp",
+        Alt = "Montáž sádrokartonu - Kozí(Běšiny), okres Klatovy, Plzeňský kraj",
+        Caption = "Kozí (Běšiny), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_9.webp",
+        Alt = "Montáž sádrokartonu - Radinovy (Vrhaveč), okres Klatovy, Plzeňský kraj",
+        Caption = "Radinovy (Vrhaveč), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_10.webp",
+        Alt = "Montáž sádrokartonu - Radinovy (Vrhaveč), okres Klatovy, Plzeňský kraj",
+        Caption = "Radinovy (Vrhaveč), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_11.webp",
+        Alt = "Montáž sádrokartonu - Lučiště (Spálené Poříčí), okres Plzeň-Jih, Plzeňský kraj",
+        Caption = "Lučiště (Spálené Poříčí), okres Plzeň-Jih, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_12.webp",
+        Alt = "Montáž sádrokartonu - Lučiště (Spálené Poříčí), okres Plzeň-Jih, Plzeňský kraj",
+        Caption = "Lučiště (Spálené Poříčí), okres Plzeň-Jih, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_13.webp",
+        Alt = "Montáž sádrokartonu - Lučiště (Spálené Poříčí), okres Plzeň-Jih, Plzeňský kraj",
+        Caption = "Lučiště (Spálené Poříčí), okres Plzeň-Jih, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_14.webp",
+        Alt = "Montáž sádrokartonu - Točník (Klatovy), okres Klatovy, Plzeňský kraj",
+        Caption = "Točník (Klatovy), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_15.webp",
+        Alt = "Montáž sádrokartonu - Točník (Klatovy), okres Klatovy, Plzeňský kraj",
+        Caption = "Točník (Klatovy), okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_16.webp",
+        Alt = "Montáž sádrokartonu - Železná ruda, okres Klatovy, Plzeňský kraj",
+        Caption = "Železná ruda, okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_17.webp",
+        Alt = "Montáž sádrokartonu - Železná ruda, okres Klatovy, Plzeňský kraj",
+        Caption = "Železná ruda, okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_18.webp",
+        Alt = "Montáž sádrokartonu - Železná ruda, okres Klatovy, Plzeňský kraj",
+        Caption = "Železná ruda, okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_19.webp",
+        Alt = "Montáž sádrokartonu - Železná ruda, okres Klatovy, Plzeňský kraj",
+        Caption = "Železná ruda, okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_20.webp",
+        Alt = "Montáž sádrokartonu - Železná ruda, okres Klatovy, Plzeňský kraj",
+        Caption = "Železná ruda, okres Klatovy, Plzeňský kraj"
+    },
+    new GalleryImage
+    {
+        Url = "media/gallery/sadrokarton_21.webp",
+        Alt = "Montáž sádrokartonu - Železná ruda, okres Klatovy, Plzeňský kraj",
+        Caption = "Železná ruda, okres Klatovy, Plzeňský kraj"
+    },
+    };
+
+    private List<GalleryImage> VisibleImages => AllImages.Take(LoadedCount).ToList();
+
+    private void LoadMore()
+    {
+        LoadedCount = Math.Min(LoadedCount + LoadStep, AllImages.Count);
+    }
+
+    private void OpenModal(GalleryImage image)
+    {
+        SelectedImage = image;
+    }
+
+    private void CloseModal()
+    {
+        SelectedImage = null;
+    }
+}
