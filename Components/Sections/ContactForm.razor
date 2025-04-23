@@ -1,0 +1,175 @@
+﻿@inject IConfiguration Configuration
+
+<div class="relative max-w-3xl mx-auto">
+    <div class="absolute -inset-1 bg-yellow-400 rounded-3xl -rotate-8 z-0 shadow-xl"></div>
+
+    <div class="relative p-10 sm:p-12 bg-gray-900 text-white rounded-2xl shadow-2xl z-10 mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
+            <span class="text-yellow-400">Zanechte zprávu</span> <span class="text-white">a já se vám co nejdříve ozvu.</span>
+        </h2>
+
+        <EditForm Enhance Model="EmailRequest" FormName="EmailForm" OnSubmit="ProcessForm">
+            @if (IsEmailSent)
+            {
+                <div class="bg-gray-800 border-l-4 border-yellow-400 p-4 rounded-md shadow-md text-white mb-6">
+                    <p class="font-semibold text-yellow-400 mb-1">Zpráva byla odeslána ✅</p>
+                    <p>
+                        Vaše zpráva byla úspěšně odeslána, brzy se vám ozvu nazpátek. <br />
+                        Nechcete čekat? Zkuste mi rovnou zavolat na telefonní číslo <strong class="text-yellow-300">+420 723 124 625</strong>.
+                    </p>
+                </div>
+            }
+
+            <div class="space-y-6">
+                <div>
+                    <label for="name" class="block font-semibold text-base text-yellow-300 mb-1">Jméno a příjmení*</label>
+                    <InputText id="name" @bind-Value="EmailRequest.Name" autocomplete="on" required class="w-full px-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-yellow-400 outline-none" />
+                </div>
+
+                <div>
+                    <label for="email" class="block font-semibold text-base text-yellow-300 mb-1">E-mail*</label>
+                    <InputText id="email" @bind-Value="EmailRequest.Email" autocomplete="on" type="email" required class="w-full px-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-yellow-400 outline-none" />
+                </div>
+
+                <div>
+                    <label for="phone" class="block font-semibold text-base text-yellow-300 mb-1">Telefon</label>
+                    <InputText id="phone" @bind-Value="EmailRequest.PhoneNumber" autocomplete="on" type="tel" pattern="^\+?[0-9]{9,15}$" title="Zadejte platné telefonní číslo (9-15 číslic, volitelně s +)" class="w-full px-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-yellow-400 outline-none" />
+                </div>
+
+                <div>
+                    <label for="message" class="block font-semibold text-base text-yellow-300 mb-1">Zpráva*</label>
+                    <InputTextArea id="message" @bind-Value="EmailRequest.Message" autocomplete="on" required rows="4" class="w-full px-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-yellow-400 outline-none resize-none" />
+                </div>
+                <div class="flex items-start gap-3 text-sm text-gray-300">
+                    <input id="agree" type="checkbox" required class="mt-1 accent-yellow-400" />
+                    <label for="agree">
+                        Souhlasím se <PrivacyPolicyModal Text="zpracováním osobních údajů" @rendermode="InteractiveServer" />. Získané informace nebudou použity k marketingovým účelům ani nebudou zpřístupněny třetím stranám.
+                    </label>
+                </div>
+
+
+                <button type="submit" class="w-full py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-md transition">
+                    Odeslat zprávu
+                </button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private bool IsEmailSent { get; set; } = false;
+
+    [SupplyParameterFromForm(FormName = "EmailForm")]
+    EmailRequest EmailRequest { get; set; } = new();
+
+    private async Task ProcessForm()
+    {
+        await SendEmailAsync();
+        ResetForm();
+        IsEmailSent = true;
+    }
+
+    private async Task SendEmailAsync()
+    {
+        var smtpHost = Configuration["SmtpSettings:Host"];
+        var smtpPortString = Configuration["SmtpSettings:Port"];
+        if (!int.TryParse(smtpPortString, out var smtpPort))
+        {
+            throw new InvalidOperationException("SMTP port není platné číslo nebo chybí v konfiguraci.");
+        }
+        var smtpUsername = Configuration["SmtpSettings:Username"];
+        var smtpPassword = Configuration["SmtpSettings:Password"]; // Načtení hesla z appsettings.json
+
+        var email = new MimeMessage();
+        email.From.Add(MailboxAddress.Parse(smtpUsername));
+        email.To.Add(MailboxAddress.Parse("brasik20@seznam.cz"));
+        email.Subject = $"{EmailRequest.Name} vám poslal zprávu!";
+        email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = $@"
+<!DOCTYPE html>
+<html lang='cs'>
+<head>
+    <meta charset='UTF-8'>
+    <style>
+        body {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a202c;
+            color: #edf2f7;
+            padding: 0;
+            margin: 0;
+        }}
+        .container {{
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #2d3748;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }}
+        .header {{
+            background-color: #facc15;
+            color: #1a202c;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }}
+        .content {{
+            padding: 24px;
+            font-size: 16px;
+            line-height: 1.6;
+        }}
+        .content p {{
+            margin: 12px 0;
+        }}
+        .label {{
+            color: #facc15;
+            font-weight: bold;
+        }}
+        .value {{
+            color: #ffffff;
+        }}
+        .footer {{
+            background-color: #1a202c;
+            color: #a0aec0;
+            text-align: center;
+            padding: 12px;
+            font-size: 12px;
+        }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            Nová zpráva od {EmailRequest.Name}
+        </div>
+        <div class='content'>
+            <p><span class='label'>Jméno:</span> <span class='value'>{EmailRequest.Name}</span></p>
+            <p><span class='label'>E-mail:</span> <span class='value'>{EmailRequest.Email}</span></p>
+            <p><span class='label'>Telefon:</span> <span class='value'>{EmailRequest.PhoneNumber}</span></p>
+            <p><span class='label'>Zpráva:</span></p>
+            <p class='value'>{EmailRequest.Message}</p>
+        </div>
+        <div class='footer'>
+            Tuto zprávu jste obdrželi automaticky z webového formuláře. Neodpovídejte prosím na tento e-mail.
+        </div>
+    </div>
+</body>
+</html>"
+            };
+
+
+
+        using var smtp = new SmtpClient();
+        await smtp.ConnectAsync(smtpHost, smtpPort, MailKit.Security.SecureSocketOptions.StartTls);
+        await smtp.AuthenticateAsync(smtpUsername, smtpPassword); // Použití hesla z appsettings.json
+        await smtp.SendAsync(email);
+        await smtp.DisconnectAsync(true);
+    }
+
+    private void ResetForm()
+    {
+        EmailRequest = new EmailRequest();
+    }
+}

@@ -14,6 +14,8 @@
     opacity: 0;
     animation: crossfade 30s infinite;
     z-index: 0;
+    will-change: opacity;
+    content-visibility: auto;
 }
 
     .carousel-slide:nth-child(1) {

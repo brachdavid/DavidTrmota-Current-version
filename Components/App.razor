@@ -1,13 +1,58 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 
 <head>
+    <!-- Základní metadata -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="language" content="cs">
+
+    <!-- SEO metadata -->
+    <meta name="description" content="Jsem David Trmota a nabízím sádrokartonářské práce v Plzeňském kraji. Montuji příčky, podhledy a půdní vestavby. Působím hlavně v Klatovech, Sušici, Přešticích, Plzni, Rokycanech a přilehlém okolí.">
+    <meta name="keywords" content="sádrokartonář Klatovy, sádrokartonář Rokycany, sádrokartonář Plzeňský kraj, montáž sádrokartonu Klatovy, sádrokartonové příčky, sádrokartonové podhledy, sádrokartonové konstrukce, rekonstrukce interiérů, sádrokartonářské práce, sádrokartony Přeštice, sádrokartonář Přeštice, sádrokartonář Sušice, sádrokartonář Domažlice">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="David Trmota - Sádrokartonář Plzeňský kraj" />
+    <meta property="og:description" content="Profesionální sádrokartonářské práce v Plzeňském kraji – montáž příček, podhledů a půdních vestaveb. Klatovy, Sušice, Domažlice, Plzeň, Rokycany a okolí" />
+    <meta property="og:image" content="/images/brand/logoST" />
+    <meta property="og:url" content="https://sadrokartonytrmota.cz" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sádrokartony Trmota" />
+    <meta property="og:locale" content="cs_CZ" />
+
+    <!-- Twitter Cards Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="David Trmota - Sádrokartonář Plzeňský kraj" />
+    <meta name="twitter:description" content="Sádrokartonářské práce v Plzeňském kraji. Příčky, podhledy, půdní vestavby. Klatovy, Sušice, Domažlice, Plzeň, Rokycany a okolí." />
+    <meta name="twitter:image" content="/images/brand/logoST" />
+
+    <link rel="canonical" href="https://sadrokartonytrmota.cz">
     <base href="/" />
+
+    <!-- Styly -->
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="DavidTrmota.styles.css" />
     <link rel="stylesheet" href="tailwind.css" />
+
+    <!-- Preloady -->
+    <link rel="preload" href="/_framework/blazor.web.js" as="script">
+    <link rel="preload" href="/tailwind.css" as="style">
+
+    <!-- Co nejrychlejší načtení prvního obrázku -->
+    <link rel="preload" as="image" href="/media/carousel/drywall_carousel_1.webp" />
+
+    <!-- Standardní Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/brand/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/brand/favicon-16x16.png">
+    <link rel="shortcut icon" href="/media/brand/favicon.ico">
+
+    <!-- Apple Touch Icon (pro iOS zařízení) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/brand/apple-touch-icon.png">
+
+    <!-- Android Chrome Icon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/media/brand/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/media/brand/android-chrome-512x512.png">
 
     <HeadOutlet />
     <!-- Schema.org Person -->
@@ -69,6 +114,17 @@
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+    <a href="https://www.toplist.cz" id="toplistcz1838544" title="TOPlist">
+        <noscript>
+            <img src="https://toplist.cz/dot.asp?id=1838544&njs=1" border="0"
+                 alt="TOPlist" width="1" height="1" />
+        </noscript><script language="JavaScript">
+                       (function(d,e,s) {d.getElementById('toplistcz1838544').innerHTML='<img src="https://toplist.cz/dot.asp?id=1838544&http='+
+                       e(d.referrer)+'&t='+e(d.title)+'&l='+e(d.URL)+'&wi='+e(s.width)+'&he='+e(s.height)+'&cd='+
+                       e(s.colorDepth)+'" width="1" height="1" border="0" alt="TOPlist" />';
+                       }(document,encodeURIComponent,window.screen))
+        </script>
+    </a>
 </body>
 
 </html>
