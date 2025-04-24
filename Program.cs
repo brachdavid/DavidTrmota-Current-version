@@ -49,7 +49,8 @@ namespace DavidTrmota
             // Tady aktivuj kompresi
             app.UseResponseCompression();
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
+
             app.UseStaticFiles();
             app.UseAntiforgery();
 

@@ -33,7 +33,7 @@
 
                 <div>
                     <label for="phone" class="block font-semibold text-base text-yellow-300 mb-1">Telefon</label>
-                    <InputText id="phone" @bind-Value="EmailRequest.PhoneNumber" autocomplete="on" type="tel" pattern="^\+?[0-9]{9,15}$" title="Zadejte platné telefonní číslo (9-15 číslic, volitelně s +)" class="w-full px-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-yellow-400 outline-none" />
+                    <InputText id="phone" @bind-Value="EmailRequest.PhoneNumber" autocomplete="on" type="tel" pattern="^\+?[0-9]{9,15}$" class="w-full px-4 py-3 border border-gray-700 bg-gray-800 text-white rounded-md focus:ring-2 focus:ring-yellow-400 outline-none" />
                 </div>
 
                 <div>
@@ -82,7 +82,7 @@
 
         var email = new MimeMessage();
         email.From.Add(MailboxAddress.Parse(smtpUsername));
-        email.To.Add(MailboxAddress.Parse("brasik20@seznam.cz"));
+        email.To.Add(MailboxAddress.Parse("trmot@seznam.cz"));
         email.Subject = $"{EmailRequest.Name} vám poslal zprávu!";
         email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
